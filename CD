@@ -1,0 +1,71 @@
+public class CD {
+    private int maCD;
+    private String tuaCD;
+    private int soBaiHat;
+    private double soThanh;
+
+    public CD() {
+        this.maCD = 999999;
+        this.tuaCD = "chưa xác định";
+        this.soBaiHat = 0;
+        this.soThanh = 0.0;
+    }
+
+    public CD(int maCD, String tuaCD, int soBaiHat, double soThanh) {
+        setMaCD(maCD);
+        setTuaCD(tuaCD);
+        setSoBaiHat(soBaiHat);
+        setSoThanh(soThanh);
+    }
+
+    public int getMaCD() {
+        return maCD;
+    }
+
+    public void setMaCD(int maCD) {
+        if (maCD > 0) {
+            this.maCD = maCD;
+        }
+    }
+
+    public String getTuaCD() {
+        return tuaCD;
+    }
+
+    public void setTuaCD(String tuaCD) {
+        if (tuaCD != null && !tuaCD.isEmpty()) {
+            this.tuaCD = tuaCD;
+        }
+    }
+
+    public int getSoBaiHat() {
+        return soBaiHat;
+    }
+
+    public void setSoBaiHat(int soBaiHat) {
+        if (soBaiHat > 0) {
+            this.soBaiHat = soBaiHat;
+        }
+    }
+
+    public double getSoThanh() {
+        return soThanh;
+    }
+
+    public void setSoThanh(double soThanh) {
+        if (soThanh > 0) {
+            this.soThanh = soThanh;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "CD{" +
+                "maCD=" + maCD +
+                ", tuaCD='" + tuaCD + '\'' +
+                ", soBaiHat=" + soBaiHat +
+                ", soThanh=" + soThanh +
+                '}';
+    }
+
+}
