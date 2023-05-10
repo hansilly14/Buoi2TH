@@ -1,0 +1,81 @@
+public class AccountList {
+    public Account[] accList;
+    public int count;
+
+    public AccountList() {
+        accList = new Account[10];
+        this.count = 0;
+    }
+    public AccountList(int n) {
+        if (n > 0) {
+            accList = new Account[n];
+        } else {
+            accList = new Account[10];
+        }
+        this.count = 0;
+    }
+    public boolean addAccount(Account acc) {
+        if (count == accList.length) {
+            return false;
+        }
+        accList[count] = acc;
+        count++;
+        return true;
+    }
+
+    public Account findAccount(long accountNumber) {
+        for (int i = 0; i < count; i++) {
+            if (accList[i].getSoTK() == accountNumber) {
+                return accList[i];
+            }
+        }
+        return null;
+    }
+    public boolean removeAccount(long SoTK) {
+        for (int i = 0; i < count; i++) {
+            if (accList[i].getSoTK() == SoTK) {
+                for (int j = i; j < count - 1; j++) {
+                    accList[j] = accList[j + 1];
+                }
+                count--;
+                return true;
+            }
+        }
+        return false;
+    }
+    public int getNumberOfAccounts() {
+        return count;
+    }
+    public void printAccountList() {
+        for (int i = 0; i < count; i++) {
+            System.out.println(accList[i].toString());
+        }
+    }
+	public boolean addAccount(long sotk, String accountName) {
+		return false;
+	}
+	public boolean withdrawMoney(long accountNumber, double amount) {
+	    Account acc = findAccount(accountNumber);
+	    if (acc != null) {
+	        if (acc.getSoTien() >= amount) {
+	            acc.withdraw(amount);
+	            return true;
+	        } else {
+	            System.out.println("Khong du tien trong tai khoan");
+	            return false;
+	        }
+	    } else {
+	        return false;
+	    }
+	}
+	public boolean depositMoney(long accountNumber, double amount) {
+	    Account acc = findAccount(accountNumber);
+	    if (acc != null) {
+	        acc.deposit(amount);
+	        return true;
+	    } else {
+	        return false;
+	    }
+	}
+	
+}
