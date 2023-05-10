@@ -1,0 +1,73 @@
+public class CDStore {
+    private CD[] cdList;
+    private int size;
+    private final int MAX_SIZE = 100;
+
+    public CDStore() {
+        cdList = new CD[MAX_SIZE];
+        size = 0;
+    }
+
+    public boolean addCD(CD cd) {
+    	  if (countCD() < cdList.length) {
+              for (int i = 0; i < countCD(); i++) {
+                  if (cdList[i].getMaCD() == cd.getMaCD()) {
+                      System.out.println("Ma CD da ton tai");
+                      return false;
+        }
+    	  }
+              cdList[countCD()] = cd;
+              size++;
+              return true;
+          } else {
+              System.out.println("He thong da day");
+              return false;
+          }
+    }
+    public int countCD() {
+        return size;
+    }
+
+    public double getTotalPrice() {
+        double totalPrice = 0;
+        for (int i = 0; i < size; i++) {
+            totalPrice += cdList[i].getSoThanh();
+        }
+        return totalPrice;
+    }
+
+    public void sortByPriceDesc() {
+        for (int i = 0; i < size - 1; i++) {
+            for (int j = i + 1; j < size; j++) {
+                if (cdList[i].getSoThanh() < cdList[j].getSoThanh()) {
+                    CD temp = cdList[i];
+                    cdList[i] = cdList[j];
+                    cdList[j] = temp;
+                }
+            }
+        }
+    }
+
+    public void sortByTitleAsc() {
+        for (int i = 0; i < size - 1; i++) {
+            for (int j = i + 1; j < size; j++) {
+                if (cdList[i].getTuaCD().compareToIgnoreCase(cdList[j].getTuaCD()) > 0) {
+                    CD temp = cdList[i];
+                    cdList[i] = cdList[j];
+                    cdList[j] = temp;
+                }
+            }
+        }
+    }
+
+    public void displayAllCDs() {
+    	 if (countCD() == 0) {
+             System.out.println("He thong rong");
+         } else {
+             for (int i = 0; i < countCD(); i++) {
+                 System.out.println(cdList[i].toString());
+             }
+    }  
+    }
+}
+
