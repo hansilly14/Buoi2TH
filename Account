@@ -1,0 +1,101 @@
+public class Account {
+    public long soTK;
+    public String tenTK;
+    public double soTien;
+    public String trangThai; 
+    public static final double LaiXuat = 0.035;
+    public Account() {
+        this.soTK = 999999;
+        this.tenTK = "chua xac dinh";
+        this.soTien = 50;
+        this.trangThai = "";
+    }
+    public Account(long sotk, String tenTK) {
+        this(sotk, tenTK, 50.0);
+    }
+    public Account(long soTK, String tenTK, double soTien) {
+        setSoTK(soTK);
+        setTenTK(tenTK);
+        setSoTien(soTien);
+        this.trangThai = "";
+    }
+    public long getSoTK() {
+        return soTK;
+    }
+    public void setSoTK(long soTK) {
+        if (soTK > 0 && soTK != 999999) {
+            this.soTK = soTK;
+            this.trangThai = "";
+        } else {
+            this.soTK = 999999;
+            this.trangThai = "So tai khoan khong hop le";
+        }
+    }
+    public String getTenTK() {
+        return tenTK;
+    }
+    public void setTenTK(String tenTK) {
+        if (tenTK != null && !tenTK.isEmpty()) {
+            this.tenTK = tenTK;
+            this.trangThai = "";
+        } else {
+            this.tenTK = "chua xac dinh";
+            this.trangThai = "Ten tai khoan khong hop le";
+        }
+    }
+    public double getSoTien() {
+        return soTien;
+    }
+
+    public void setSoTien(double soTien) {
+        if (soTien >= 50) {
+            this.soTien = soTien;
+            this.trangThai = "";
+        } else {
+            this.soTien = 50;
+            this.trangThai = "So tien khong hop le";
+        }
+    }
+    public String getTrangThai() {
+        return trangThai;
+    }
+    public void deposit(double amount) {
+        if (amount <= 0) {
+            this.trangThai = "So tien nap vao phai lon hon 0.";
+            return;
+        }
+        this.soTien += amount;
+        this.trangThai = "";
+    }
+    public void withdraw(double amount) {
+        if (amount <= 0) {
+            this.trangThai = "So tien rut ra phai lon hon 0.";
+            return;
+        }
+        if (amount > this.soTien) {
+            this.trangThai = "So tien rut ra vuot qua so du trong tai khoan.";
+            return;
+        }
+        this.soTien -= amount;
+        this.trangThai = "";
+    }
+    public void transfer(Account otherAccount, double amount) {
+    	if (amount <= 0 || amount > soTien) {
+    	trangThai = "So tien chuyen khoan khong hop le";
+    	return;
+    	}
+    	soTien -= amount;
+    	otherAccount.deposit(amount);
+    	trangThai = "Chuyen khoan thanh cong";
+    	}
+    public void maturity() {
+    	double interest = soTien * LaiXuat;
+    	soTien += interest;
+    	trangThai = "Dao han thanh cong. Lai suat la: " + LaiXuat + ". So tien lai la: " + interest + ".";
+    	}
+    @Override
+    public String toString() {
+        String strSoTien = String.format("%.2f", this.soTien);
+        return "So tai khoan: " + this.soTK + ", Ten tai khoan: " + this.tenTK + ", So tien trong tai khoan: " + strSoTien + " VNĐ";
+    }
+}
