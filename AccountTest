@@ -1,0 +1,98 @@
+import java.util.Scanner;
+public class AccountTest {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        AccountList list = new AccountList();
+        int choice = 0;
+        do {
+            System.out.println("MENU:");
+            System.out.println("1. Them tai khoan");
+            System.out.println("2. So tai khoan hien co");
+            System.out.println("3. In thong tin tat ca tai khoan");
+            System.out.println("4. Nap tien vao tai khoan");
+            System.out.println("5. Rut tien khoi tai khoan");
+            System.out.println("6. Chuyen tien tu tai khoan nay sang tai khoan khac");
+            System.out.println("7. Ket thuc");
+            System.out.print("Nhap lua chon cua ban: ");
+            choice = scanner.nextInt();
+            switch (choice) {
+                case 1:
+                	 System.out.print("Nhap so tai khoan: ");
+                     long sotk = scanner.nextLong();
+                     scanner.nextLine();
+                     System.out.print("Nhap ten tai khoan: ");
+                     String TenTk = scanner.nextLine();
+                     Account acc= new Account(sotk, TenTk);
+                     boolean check = list.addAccount(acc);
+                     if ( check) {
+                     	 list.addAccount(sotk, TenTk);
+                         System.out.println("Tham tai khoan thanh cong!");
+                     } else {
+                         System.out.println("Khong the them tai khoan, danh sach da day!");
+                     }
+                    break;
+                case 2:
+                    System.out.println("So tai khoan hien co: " +  list.getNumberOfAccounts());
+                    break;
+                case 3:
+                    list.printAccountList();
+                    break;
+                case 4:
+                    depositMoney(list, scanner);
+                    break;
+                case 5:
+                    withdrawFromAccount(list, scanner);
+                    break;
+                case 6:
+                    transferMoney(list, scanner);
+                    break;
+                case 7:
+                    System.out.println("Ket thuc chuong trinh!");
+                    break;
+                default:
+                    System.out.println("Lua chon khong hop le, vui long chon lai!");
+            }
+        } while (choice != 7);
+    }
+	public static  void depositMoney(AccountList list, Scanner scanner) {
+        System.out.print("Nhap so tai khoan: ");
+        Long accountNumber = scanner.nextLong();
+        System.out.print("Nhap so tien can nap: ");
+        double amount = scanner.nextDouble();
+        boolean status = list.depositMoney(accountNumber, amount);
+        System.out.println("Da them tien cho ban");
+    }
+    private static void withdrawFromAccount(AccountList list, Scanner scanner) {
+        System.out.print("Nhap so tai khoan: ");
+        long accountNumber = scanner.nextLong();
+        System.out.print("Nhap so tien can rut: ");
+        double amount = scanner.nextDouble();
+        boolean status = list.withdrawMoney(accountNumber, amount);
+        System.out.println("Ban dã rút tien");
+    }
+    public static void transferMoney(AccountList list, Scanner scanner) {
+        System.out.print("Nhap so tai khoan nguon: ");
+        long accountNumber1 = scanner.nextLong();
+        System.out.print("Nhap so tai khoan dich: ");
+        long accountNumber2 = scanner.nextLong();
+        System.out.print("Nhap sp tien can chuyen: ");
+        double amount = scanner.nextDouble();
+        Account acc1 = list.findAccount(accountNumber1);
+        Account acc2 = list.findAccount(accountNumber2);
+        if (acc1 == null) {
+            System.out.println("Tai khoan nguon khong ton tai!");
+            return;
+        }
+        if (acc2 == null) {
+            System.out.println("Tai khoan dich khong ton tai!");
+            return;
+        }
+        if (amount <= 0 || amount > acc1.getSoTien()) {
+            System.out.println("So tien chuyen khong hop le!");
+            return;
+        }
+        acc1.withdraw(amount);
+        acc2.deposit(amount);
+        System.out.println("Chuyen khoan thanh cong!");
+    }
+}
